@@ -27,3 +27,41 @@ class Solution {
         return true;
     }
 }
+
+//code 2
+class Solution {
+    public boolean canBeValid(String s, String locked) {
+        int n = s.length();
+        if(n%2!=0) return false;
+        Stack<Integer> stash = new Stack<>();
+        Stack<Integer> unlocked = new Stack<>();
+        for(int i = 0; i<n ; i++){
+            char ch = s.charAt(i);
+            char status = locked.charAt(i);
+            if(status=='0'){
+                unlocked.push(i);
+            }
+            else if(ch == '('){
+                stash.push(i);
+            }
+            else{
+                if(!stash.isEmpty()){
+                    stash.pop();
+                }
+                else{
+                    if(!unlocked.isEmpty()){
+                        unlocked.pop();
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+        }
+        while(!stash.isEmpty()&& !unlocked.isEmpty() && stash.peek()<unlocked.peek()){
+            unlocked.pop();
+            stash.pop();
+        }
+        return (stash.isEmpty());
+    }
+}
