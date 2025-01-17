@@ -12,6 +12,7 @@ class Solution {
     }
 }
 
+
 //CODE 2
 
 class Solution {
@@ -33,3 +34,13 @@ class Solution {
         return true;
     }
 }
+
+
+//CODE 3v- INDUSTRY LEVEL CODE
+
+class Solution {
+    public boolean doesValidArrayExist(int[] derived) {
+        return Arrays.stream(derived).reduce(0, (subtotal, element) -> subtotal ^ element) == 0; 
+    }
+}
+
