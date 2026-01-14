@@ -1,0 +1,53 @@
+class Solution {
+    public double separateSquares(int[][] squares) {
+        double low = Integer.MAX_VALUE;
+        double high = Integer.MIN_VALUE;
+        double total = 0.0;
+        for(int [] square : squares){
+            double x = square[0];
+            double y = square[1];
+            double l = square[2];
+            total += l*l;
+
+            low = Math.min(low,y);
+            high = Math.max(high,y+l);
+        }
+        double result = 0.0;
+        while(high - low > 1e-5){
+            double mid = low + (high-low)/2;
+            result = mid;
+            if(check(squares, mid, total) == true){
+                high = mid;
+            }
+            else{
+                low = mid;
+            }
+        }
+        return result;
+    }
+
+
+    public static boolean check(int[][] squares, double midY, double total) {
+    double botArea = 0.0;
+
+    for (int[] square : squares) {
+        double y = square[1];
+        double l = square[2];
+
+        double botY = y;
+        double topY = y + l;
+
+        if (midY >= topY) {
+            // full square below
+            botArea += l * l;
+        } else if (midY > botY) {
+            // partial area below
+            botArea += (midY - botY) * l;
+        }
+    }
+
+    // Is bottom area more than or equal to half?
+    return botArea >= total / 2.0;
+}
+
+}
